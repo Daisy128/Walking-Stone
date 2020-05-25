@@ -1,4 +1,4 @@
-package rollingcubes.javafx.controller;
+package stonemoving.javafx.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

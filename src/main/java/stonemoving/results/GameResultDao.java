@@ -1,4 +1,4 @@
-package rollingcubes.results;
+package stonemoving.results;
 
 import com.google.inject.persist.Transactional;
 import util.jpa.GenericJpaDao;

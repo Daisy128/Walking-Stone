@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rollingcubes.javafx.controller.LaunchController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="stonemoving.javafx.controller.LaunchController">
    <children>
-      <Label layoutX="182.0" layoutY="77.0" text="Rolling Cubes" textFill="#002366">
+      <Label layoutX="182.0" layoutY="77.0" text="stonemoving" textFill="#002366">
          <font>
             <Font name="MathJax_Main-Bold" size="36.0" />
          </font>
