@@ -116,7 +116,6 @@ public class GameController {
                     log.trace("Image({}, {}) = {}", i, j, view.getImage());
                     view.setImage(stoneImages.get(1));
                 }
-                ;
             }
         }
     }
@@ -124,17 +123,13 @@ public class GameController {
     public void handleClickOnStone(MouseEvent mouseEvent) {
         int row = GridPane.getColumnIndex((Node) mouseEvent.getSource());
         int col = GridPane.getRowIndex((Node) mouseEvent.getSource());
-        // int row = 1;
-        //  int col = 0;
         log.debug("Path ({}, {}) is chosen", row, col);
         /*for(int i=0;i<8;i++)
             for(int j=0;j<8;j++)
                 log.debug("{} " ,gameState.getMatrix()[i][j].getValue());*/
-        //      if (! gameState.isSolved() && gameState.canBeMoved(row, col)) {
-        if (gameState.canBeMoved(row, col)) {
+        if (! gameState.isSolved() && gameState.canBeMoved(row, col)) {
             steps.set(steps.get() + 1);
             gameState.moveToNext(row, col);
-
             if (gameState.isSolved()) {
                 gameOver.setValue(true);
                 log.info("Player {} has solved the game in {} steps", playerName, steps.get());

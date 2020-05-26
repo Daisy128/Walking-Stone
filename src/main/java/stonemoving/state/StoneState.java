@@ -109,17 +109,13 @@ public class StoneState implements Cloneable {
     public boolean canBeMoved(int row, int col) {
         boolean m,n;
 
-        if (matrix[row][col] == Board.FRAMED)
+        if (CURRENT[stoneRow][stoneCol] == Integer.parseInt(String.valueOf(Board.FRAMED)))
             return 0 <= row && row <= 7 && 0 <= col && col <= 7 &&
                     Math.abs(stoneRow - row) == 1 && Math.abs(stoneCol - col) == 1;
-        else if (matrix[row][col] == Board.UNFRAMED){
-            m=0 <= row && row <= 7 && 0 <= col && col <= 7;
-            n=(Math.abs(stoneRow - row) + Math.abs(stoneCol - col) == 1);
-            return m&&n;
-            //return 0 <= row && row <= 7 && 0 <= col && col <= 7 &&
-             //       (Math.abs(stoneRow - row) + Math.abs(stoneCol - col) == 1);
+        else if (CURRENT[stoneRow][stoneCol] == Integer.parseInt(String.valueOf(Board.UNFRAMED))){
+            return 0 <= row && row <= 7 && 0 <= col && col <= 7 &&
+                    (Math.abs(stoneRow - row) + Math.abs(stoneCol - col) == 1);
         }
-
         else
             return false;
 
@@ -174,8 +170,12 @@ public class StoneState implements Cloneable {
     public static void main(String[] args) {
         StoneState state = new StoneState();
         System.out.println(state);
-        state.moveToNext(1, 0);
+        state.moveToNext(0, 1);
         System.out.println(state);
-        System.out.println(state.canBeMoved(1,1));
+        state.moveToNext(0, 2);
+        System.out.println(state);
+        System.out.println(state.canBeMoved(1,2));
+        state.moveToNext(1, 2);
+        System.out.println(state);
     }
 }
