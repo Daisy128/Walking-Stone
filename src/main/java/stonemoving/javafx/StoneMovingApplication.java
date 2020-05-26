@@ -14,6 +14,9 @@ import util.guice.PersistenceModule;
 import javax.inject.Inject;
 import java.util.List;
 
+/**
+ * Configuring the jpaUnit and start the application with initial state.
+ */
 @Slf4j
 public class StoneMovingApplication extends Application {
 

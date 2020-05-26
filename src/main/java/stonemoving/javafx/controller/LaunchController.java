@@ -14,6 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 import javax.inject.Inject;
 import java.io.IOException;
 
+/**
+ * Control the first page of the game.
+ */
 @Slf4j
 public class LaunchController {
 
@@ -26,6 +29,11 @@ public class LaunchController {
     @FXML
     private Label errorLabel;
 
+    /**
+     * Start the game, goes to the second page.
+     * @param actionEvent is that the player clicks on the "start" button.
+     * @throws IOException is thrown when the action fails.
+     */
     public void startAction(ActionEvent actionEvent) throws IOException {
         if (playerNameTextField.getText().isEmpty()) {
             errorLabel.setText("Enter your name!");

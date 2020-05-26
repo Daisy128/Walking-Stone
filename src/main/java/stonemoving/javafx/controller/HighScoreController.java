@@ -27,6 +27,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.List;
 
+/**
+ * Control the last page of the game where it has finished.
+ */
 @Slf4j
 public class HighScoreController {
 
@@ -98,6 +101,11 @@ public class HighScoreController {
         highScoreTable.setItems(observableResult);
     }
 
+    /**
+     * The game page goes to the first one where the player inter his name.
+     * @param actionEvent is when the player clicks on "restart" button.
+     * @throws IOException is thrown when the action fails.
+     */
     public void handleRestartButton(ActionEvent actionEvent) throws IOException {
         log.debug("{} is pressed", ((Button) actionEvent.getSource()).getText());
         log.info("Loading launch scene...");

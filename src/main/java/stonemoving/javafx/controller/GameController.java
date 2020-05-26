@@ -34,6 +34,9 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+/**
+ * Control the processing page of the game.
+ */
 @Slf4j
 public class GameController {
 
@@ -75,10 +78,17 @@ public class GameController {
 
     private BooleanProperty gameOver = new SimpleBooleanProperty();
 
+    /**
+     * Set the player's name when he wants to access in the game.
+     * @param playerName the name setting by the player.
+     */
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
     }
 
+    /**
+     * Initialize the game page with all images and the stone location.
+     */
     @FXML
     public void initialize() {
         stoneImages = List.of(
@@ -130,6 +140,10 @@ public class GameController {
         }
     }
 
+    /**
+     * The stone is moved when the player clicks the next step.
+     * @param mouseEvent is when the player clicks on pane.
+     */
     public void handleClickOnStone(MouseEvent mouseEvent) {
         int row = GridPane.getColumnIndex((Node) mouseEvent.getSource());
         int col = GridPane.getRowIndex((Node) mouseEvent.getSource());
@@ -137,7 +151,8 @@ public class GameController {
         log.debug("Path ({}, {}) is chosen", row, col);
         if (! gameState.isSolved() && gameState.canBeMoved(row, col)) {
             steps.set(steps.get() + 1);
-            scores.set(scores.get() + Integer.parseInt(mark));
+            if(row!=7 || col!=7)
+                scores.set(scores.get() + Integer.parseInt(mark));
             gameState.moveToNext(row, col);
             if (gameState.isSolved()) {
                 gameOver.setValue(true);
@@ -150,6 +165,10 @@ public class GameController {
         displayGameState();
     }
 
+    /**
+     * Reset the game to initial state.
+     * @param actionEvent is the action that the player clicks on that button.
+     */
     public void handleResetButton(ActionEvent actionEvent)  {
         log.debug("{} is pressed", ((Button) actionEvent.getSource()).getText());
         log.info("Resetting game...");
@@ -157,6 +176,11 @@ public class GameController {
         resetGame();
     }
 
+    /**
+     * Give up the game and go to the final high score list.
+     * @param actionEvent is when the player clicks on "give up".
+     * @throws IOException is thrown when the action fails.
+     */
     public void handleGiveUpButton(ActionEvent actionEvent) throws IOException {
         String buttonText = ((Button) actionEvent.getSource()).getText();
         log.debug("{} is pressed", buttonText);
@@ -190,5 +214,4 @@ public class GameController {
         stopWatchTimeline.setCycleCount(Animation.INDEFINITE);
         stopWatchTimeline.play();
     }
-
 }

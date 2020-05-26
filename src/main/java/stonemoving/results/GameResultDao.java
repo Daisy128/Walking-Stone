@@ -10,6 +10,9 @@ import java.util.List;
  */
 public class GameResultDao extends GenericJpaDao<GameResult> {
 
+/**
+ * Method that inherit the {@link GameResult}.
+ */
     public GameResultDao() {
         super(GameResult.class);
     }

@@ -6,11 +6,17 @@ import lombok.Data;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-
+/**
+ * Set the state of the game.
+ */
 @Data
 @Slf4j
 public class StoneState implements Cloneable {
 
+    /**
+     * The 8&#xd7;8 array configures the initial state of
+     * the stone-path matrix.
+     */
     public static final int[][] INITIAL = {
             {0, 1, 2, 1, 1, 2, 1, 1},
             {1, 1, 1, 1, 2, 1, 1, 2},
@@ -22,6 +28,10 @@ public class StoneState implements Cloneable {
             {1, 2, 1, 2, 1, 1, 2, 1}
     };
 
+    /**
+     * The 8&#xd7;8 array just for representing the goal state,
+     * not used but can make the code clearer.
+     */
     public static final int[][] GOAL = {
             {1, 1, 2, 1, 1, 2, 1, 1},
             {1, 1, 1, 1, 2, 1, 1, 2},
@@ -33,6 +43,10 @@ public class StoneState implements Cloneable {
             {1, 2, 1, 2, 1, 1, 2, 0}
     };
 
+    /**
+     * The 8&#xd7;8 array stores the default state for
+     * swapping the variables.
+     */
     public static final int[][] CURRENT = {
             {1, 1, 2, 1, 1, 2, 1, 1},
             {1, 1, 1, 1, 2, 1, 1, 2},
@@ -53,10 +67,21 @@ public class StoneState implements Cloneable {
     @Setter(AccessLevel.NONE)
     private int stoneCol;
 
+    /**
+     * Creates a {@code RollingCubesState} object representing
+     * the initial state of the stone-path.
+     */
     public StoneState() {
         this(INITIAL);
     }
 
+    /**
+     * Initialize state by the specified array.
+     *
+     * @param a is a 8&#xd7;8 array indicates the initial state.
+     * @throws IllegalArgumentException if the array does not represent a valid
+     *                                  configuration of the tray.
+     */
     public StoneState(int[][] a) {
         if (!isValidMatrix(a)) {
             throw new IllegalArgumentException();
@@ -100,14 +125,27 @@ public class StoneState implements Cloneable {
         }
     }
 
+    /**
+     * Check whether the game is solved.
+     *
+     * @return {@code true} if the puzzle is solved,
+     *          {@code false} otherwise.
+     */
     public boolean isSolved() {
         if (matrix[7][7] == Board.STONE)
             return true;
         return false;
     }
 
+    /**
+     * Check whether the stone can be moved to the specified location.
+     *
+     * @param row is the row of the specified position
+     * @param col is the col of the specified position
+     * @return {@code true} if stone at its position can be move to the specified location,
+     *         {@code false} otherwise.
+     */
     public boolean canBeMoved(int row, int col) {
-        boolean m,n;
 
         if (CURRENT[stoneRow][stoneCol] == Integer.parseInt(String.valueOf(Board.FRAMED)))
             return 0 <= row && row <= 7 && 0 <= col && col <= 7 &&
@@ -121,6 +159,13 @@ public class StoneState implements Cloneable {
 
     }
 
+    /**
+     * Set the state of the specified place to be the stone's location,
+     * set the previous place stone has stayed back to normal path.
+     *
+     * @param row is the row of the path where the stone wants to go
+     * @param col is the column of the path where the stone wants to go
+     */
     public void moveToNext(int row, int col) {
         try {
             if (matrix[row][col] != Board.STONE){
@@ -128,21 +173,22 @@ public class StoneState implements Cloneable {
                 stoneRow = row;
                 stoneCol = col;
             }
-
-
             for (int i = row - 1; i <= row + 1; i++)
                 for (int j = col - 1; j <= col + 1; j++){
                     if( i<0 || i>7 || j<0 || j>7 );
                     else if(row==i && col==j);
                     else if (matrix[row][col] == Board.STONE && matrix[i][j] == Board.STONE )
                     {  matrix[i][j] = Board.of(CURRENT[i][j]); break;}
-
                 }
         } catch (Exception e) {
             throw new ArrayIndexOutOfBoundsException();
         }
     }
 
+    /**
+     * Copy the matrix.
+     * @return the copy one the the matrix
+     */
     public StoneState clone() {
         StoneState copy = null;
         try {
@@ -156,6 +202,10 @@ public class StoneState implements Cloneable {
         return copy;
     }
 
+    /**
+     * The content of the matrix, consists of STONE,FRAMED,UNFRAMED.
+      * @return the content string of the matrix
+     */
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (Board[] row : matrix) {
@@ -167,6 +217,10 @@ public class StoneState implements Cloneable {
         return sb.toString();
     }
 
+    /**
+     * For testing if the state sets well.
+     * @param args arguments
+     */
     public static void main(String[] args) {
         StoneState state = new StoneState();
         System.out.println(state);
