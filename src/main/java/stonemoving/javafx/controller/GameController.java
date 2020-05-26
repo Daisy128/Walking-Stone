@@ -46,6 +46,7 @@ public class GameController {
     private String playerName;
     private StoneState gameState;
     private IntegerProperty steps = new SimpleIntegerProperty();
+    private IntegerProperty scores = new SimpleIntegerProperty();
     private Instant startTime;
     private List<Image> stoneImages;
 
@@ -57,6 +58,9 @@ public class GameController {
 
     @FXML
     private Label stepsLabel;
+
+    @FXML
+    private Label scoresLabel;
 
     @FXML
     private Label stopWatchLabel;
@@ -79,8 +83,10 @@ public class GameController {
     public void initialize() {
         stoneImages = List.of(
                 new Image(getClass().getResource("/images/stone.png").toExternalForm()),
-                new Image(getClass().getResource("/images/trans.png").toExternalForm())
+                new Image(getClass().getResource("/images/unframed.png").toExternalForm()),
+                new Image(getClass().getResource("/images/tranframed.png").toExternalForm())
         );
+        scoresLabel.textProperty().bind(scores.asString());
         stepsLabel.textProperty().bind(steps.asString());
         gameOver.addListener((observable, oldValue, newValue) -> {
             if (newValue) {
@@ -96,6 +102,7 @@ public class GameController {
     private void resetGame() {
         gameState = new StoneState(StoneState.INITIAL);
         steps.set(0);
+        scores.set(0);
         startTime = Instant.now();
         gameOver.setValue(false);
         displayGameState();
@@ -107,14 +114,17 @@ public class GameController {
         ImageView view;
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
+                view = (ImageView) gameGrid.getChildren().get(i * 8 + j);
+                log.trace("Image({}, {}) = {}", i, j, view.getImage());
+
                 if (gameState.getMatrix()[i][j].getValue() == 0) {
-                    view = (ImageView) gameGrid.getChildren().get(i * 8 + j);
-                    log.trace("Image({}, {}) = {}", i, j, view.getImage());
                     view.setImage(stoneImages.get(0));
-                } else {
-                    view = (ImageView) gameGrid.getChildren().get(i * 8 + j);
-                    log.trace("Image({}, {}) = {}", i, j, view.getImage());
+                }
+                else if(gameState.getMatrix()[i][j].getValue() == 1) {
                     view.setImage(stoneImages.get(1));
+                }
+                else{
+                    view.setImage(stoneImages.get(2));
                 }
             }
         }
@@ -123,12 +133,11 @@ public class GameController {
     public void handleClickOnStone(MouseEvent mouseEvent) {
         int row = GridPane.getColumnIndex((Node) mouseEvent.getSource());
         int col = GridPane.getRowIndex((Node) mouseEvent.getSource());
+        String mark = ((Label) mouseEvent.getSource()).getText();
         log.debug("Path ({}, {}) is chosen", row, col);
-        /*for(int i=0;i<8;i++)
-            for(int j=0;j<8;j++)
-                log.debug("{} " ,gameState.getMatrix()[i][j].getValue());*/
         if (! gameState.isSolved() && gameState.canBeMoved(row, col)) {
             steps.set(steps.get() + 1);
+            scores.set(scores.get() + Integer.parseInt(mark));
             gameState.moveToNext(row, col);
             if (gameState.isSolved()) {
                 gameOver.setValue(true);
@@ -141,7 +150,7 @@ public class GameController {
         displayGameState();
     }
 
-    public void handleResetButton(ActionEvent actionEvent) {
+    public void handleResetButton(ActionEvent actionEvent)  {
         log.debug("{} is pressed", ((Button) actionEvent.getSource()).getText());
         log.info("Resetting game...");
         stopWatchTimeline.stop();
@@ -168,7 +177,7 @@ public class GameController {
                 .player(playerName)
                 .solved(gameState.isSolved())
                 .duration(Duration.between(startTime, Instant.now()))
-                .steps(steps.get())
+                .steps(scores.get()/steps.get())
                 .build();
         return result;
     }

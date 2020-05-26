@@ -12,8 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 public class StoneState implements Cloneable {
 
     public static final int[][] INITIAL = {
-            {0, 1, 2, 1, 1, 2, 1, 2},
-            {1, 1, 1, 1, 1, 1, 1, 2},
+            {0, 1, 2, 1, 1, 2, 1, 1},
+            {1, 1, 1, 1, 2, 1, 1, 2},
             {1, 1, 1, 2, 1, 1, 1, 1},
             {1, 1, 1, 1, 1, 1, 1, 1},
             {2, 1, 1, 1, 1, 1, 1, 1},
@@ -23,8 +23,8 @@ public class StoneState implements Cloneable {
     };
 
     public static final int[][] GOAL = {
-            {1, 1, 2, 1, 1, 2, 1, 2},
-            {1, 1, 1, 1, 1, 1, 1, 2},
+            {1, 1, 2, 1, 1, 2, 1, 1},
+            {1, 1, 1, 1, 2, 1, 1, 2},
             {1, 1, 1, 2, 1, 1, 1, 1},
             {1, 1, 1, 1, 1, 1, 1, 1},
             {2, 1, 1, 1, 1, 1, 1, 1},
@@ -34,8 +34,8 @@ public class StoneState implements Cloneable {
     };
 
     public static final int[][] CURRENT = {
-            {1, 1, 2, 1, 1, 2, 1, 2},
-            {1, 1, 1, 1, 1, 1, 1, 2},
+            {1, 1, 2, 1, 1, 2, 1, 1},
+            {1, 1, 1, 1, 2, 1, 1, 2},
             {1, 1, 1, 2, 1, 1, 1, 1},
             {1, 1, 1, 1, 1, 1, 1, 1},
             {2, 1, 1, 1, 1, 1, 1, 1},
