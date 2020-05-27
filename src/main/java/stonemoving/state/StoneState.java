@@ -139,22 +139,25 @@ public class StoneState implements Cloneable {
      * {@code false} otherwise.
      */
     public boolean canBeMoved(int row, int col) {
-        int m = 0, n = 0;
-
+        int m = 0, x = 0;
         if (CURRENT[stoneRow][stoneCol] == Integer.parseInt(String.valueOf(Board.FRAMED))) {
             {
-                if (((BOARD[stoneRow][stoneCol] + stoneRow) == row) && ((BOARD[stoneRow][stoneCol] + stoneCol) == col))
-                    n = 1;
-                else if (((stoneRow + BOARD[stoneRow][stoneCol]) == row) && ((BOARD[stoneRow][stoneCol] - stoneCol) == col))
-                    n = 1;
-                else if (((BOARD[stoneRow][stoneCol] + stoneCol) == col) && ((stoneRow - BOARD[stoneRow][stoneCol]) == row))
-                    n = 1;
-                else if (((stoneCol - BOARD[stoneRow][stoneCol]) == col) && ((stoneRow - BOARD[stoneRow][stoneCol]) == row))
-                    n = 1;
 
-                else n = 0;
+                if ((BOARD[stoneRow][stoneCol] + stoneRow == row) &&  (BOARD[stoneRow][stoneCol] + stoneCol == col))
+                    x = 1;
+
+                else if ((stoneRow + BOARD[stoneRow][stoneCol] == row) && (stoneCol - BOARD[stoneRow][stoneCol] == col))
+                    x = 1;
+
+                else if ((stoneRow - BOARD[stoneRow][stoneCol] == row) && (BOARD[stoneRow][stoneCol] + stoneCol == col))
+                    x = 1;
+
+                else if (((stoneRow - BOARD[stoneRow][stoneCol]) == row) && ((stoneCol - BOARD[stoneRow][stoneCol]) == col))
+                    x = 1;
+                else ;
             }
-            return n == 1 && 0 <= row && row <= 7 && 0 <= col && col <= 7;
+            return x == 1 && 0 <= row && row <= 7 && 0 <= col && col <= 7;
+
         } else if (CURRENT[stoneRow][stoneCol] == Integer.parseInt(String.valueOf(Board.UNFRAMED))) {
             if (((BOARD[stoneRow][stoneCol] + stoneRow) == row) && (stoneCol == col)) m = 1;
 
@@ -197,6 +200,13 @@ public class StoneState implements Cloneable {
         }
     }
 
+    public void changeDirec(){
+        for (int i = 0; i <= 7; i++)
+            for (int j = 0; j <= 7; j++) {
+                if(matrix[i][j] == Board.DIREC)
+                    matrix[i][j] = Board.of(CURRENT[i][j]);
+            }
+    }
     /**
      * Copy the matrix.
      *

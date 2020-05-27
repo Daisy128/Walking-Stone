@@ -16,7 +16,9 @@ public enum Board {
     /**
      * The value is 2.
       */
-    FRAMED;
+    FRAMED,
+
+    DIREC;
 
     /**
      * Returns the instance represented by the value specified.

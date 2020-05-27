@@ -25,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 import stonemoving.results.GameResult;
 import stonemoving.results.GameResultDao;
+import stonemoving.state.Board;
 import stonemoving.state.StoneState;
 
 import javax.inject.Inject;
@@ -51,6 +52,17 @@ public class GameController {
     private IntegerProperty steps = new SimpleIntegerProperty();
     private Instant startTime;
     private List<Image> stoneImages;
+
+//    public static final int[][] PATH = {
+//            {0, 0, 0, 0, 0, 0, 0, 0},
+//            {0, 0, 0, 0, 0, 0, 0, 0},
+//            {0, 0, 0, 0, 0, 0, 0, 0},
+//            {0, 0, 0, 0, 0, 0, 0, 0},
+//            {0, 0, 0, 0, 0, 0, 0, 0},
+//            {0, 0, 0, 0, 0, 0, 0, 0},
+//            {0, 0, 0, 0, 0, 0, 0, 0},
+//            {0, 0, 0, 0, 0, 0, 0, 0}
+//    };
 
     @FXML
     private Label messageLabel;
@@ -127,25 +139,32 @@ public class GameController {
                     view.setImage(stoneImages.get(0));
                 } else if (gameState.getMatrix()[i][j].getValue() == 1) {
                     view.setImage(stoneImages.get(1));
-                } else {
+                } else if (gameState.getMatrix()[i][j].getValue() == 2){
                     view.setImage(stoneImages.get(2));
+                } else{
+                    view.setImage(stoneImages.get(3));
                 }
             }
         }
     }
 
-    private void displayGameBoard(int row, int col) {
-        ImageView view;
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                view = (ImageView) gameGrid.getChildren().get(i * 8 + j);
-                log.trace("Image({}, {}) = {}", i, j, view.getImage());
-                if (gameState.canBeMoved(row, col))
-                    view.setImage(stoneImages.get(3));
-            }
-        }
-    }
-
+//    private void displayGameBoard(StoneState gameState,int[][] path) {
+//        ImageView view;
+//        for (int i = 0; i < 8; i++) {
+//            for (int j = 0; j < 8; j++) {
+//                if (path[i][j]==1) {
+//                    view = (ImageView) gameGrid.getChildren().get(i * 8 + j);
+//                    log.trace("Image({}, {}) = {}", i, j, view.getImage());
+//                    view.setImage(stoneImages.get(3));
+//                }
+//            }
+//        }
+//    }
+//    private void initialPath(){
+//        for(int i=0;i<8;++i)
+//            for (int j=0;j<8;++j)
+//                PATH[i][j] = 0;
+//    }
 
     /**
      * The stone is moved when the player clicks the next step.
@@ -155,11 +174,21 @@ public class GameController {
     public void handleClickOnStone(MouseEvent mouseEvent) {
         int row = GridPane.getColumnIndex((Node) mouseEvent.getSource());
         int col = GridPane.getRowIndex((Node) mouseEvent.getSource());
+//        initialPath();
+//        displayGameBoard(gameState,PATH);
+    //    gameState.changeDirec();
+        displayGameState();
         String mark = ((Label) mouseEvent.getSource()).getText();
         log.debug("Path ({}, {}) is chosen", row, col);
         if (!gameState.isSolved() && gameState.canBeMoved(row, col)) {
-            if (row != 7 || col != 7)
+
+            if (row != 7 || col != 7) {
+                for(int i=0;i<7;i++)
+                    for(int j=0;j<7;j++)
+                        if(gameState.canBeMoved(i,j))
+                             gameState.getMatrix()[i][j] = Board.DIREC;
                 steps.set(steps.get() + Integer.parseInt(mark));
+            }
             gameState.moveToNext(row, col);
             if (gameState.isSolved()) {
                 gameOver.setValue(true);
@@ -169,8 +198,13 @@ public class GameController {
                 giveUpButton.setText("Finish");
             }
         }
+//        for(int i=0;i<7;i++)
+//            for(int j=0;j<7;j++)
+//                if(gameState.canBeMoved(i,j))
+//                    PATH[i][j] = 1;
+//        displayGameBoard(gameState,PATH);
         displayGameState();
-        displayGameBoard(row, col);
+
     }
 
     /**
