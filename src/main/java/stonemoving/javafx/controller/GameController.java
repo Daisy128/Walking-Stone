@@ -53,17 +53,6 @@ public class GameController {
     private Instant startTime;
     private List<Image> stoneImages;
 
-//    public static final int[][] PATH = {
-//            {0, 0, 0, 0, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 0, 0}
-//    };
-
     @FXML
     private Label messageLabel;
 
@@ -104,7 +93,7 @@ public class GameController {
                 new Image(getClass().getResource("/images/stone.png").toExternalForm()),
                 new Image(getClass().getResource("/images/unframed.png").toExternalForm()),
                 new Image(getClass().getResource("/images/blueframed.png").toExternalForm()),
-                new Image(getClass().getResource("/images/unnamed.png").toExternalForm())
+                new Image(getClass().getResource("/images/direction.png").toExternalForm())
         );
         stepsLabel.textProperty().bind(steps.asString());
         gameOver.addListener((observable, oldValue, newValue) -> {
@@ -148,24 +137,6 @@ public class GameController {
         }
     }
 
-//    private void displayGameBoard(StoneState gameState,int[][] path) {
-//        ImageView view;
-//        for (int i = 0; i < 8; i++) {
-//            for (int j = 0; j < 8; j++) {
-//                if (path[i][j]==1) {
-//                    view = (ImageView) gameGrid.getChildren().get(i * 8 + j);
-//                    log.trace("Image({}, {}) = {}", i, j, view.getImage());
-//                    view.setImage(stoneImages.get(3));
-//                }
-//            }
-//        }
-//    }
-//    private void initialPath(){
-//        for(int i=0;i<8;++i)
-//            for (int j=0;j<8;++j)
-//                PATH[i][j] = 0;
-//    }
-
     /**
      * The stone is moved when the player clicks the next step.
      *
@@ -174,23 +145,25 @@ public class GameController {
     public void handleClickOnStone(MouseEvent mouseEvent) {
         int row = GridPane.getColumnIndex((Node) mouseEvent.getSource());
         int col = GridPane.getRowIndex((Node) mouseEvent.getSource());
-//        initialPath();
-//        displayGameBoard(gameState,PATH);
-    //    gameState.changeDirec();
-        displayGameState();
+        gameState.changeDirec();
         String mark = ((Label) mouseEvent.getSource()).getText();
         log.debug("Path ({}, {}) is chosen", row, col);
         if (!gameState.isSolved() && gameState.canBeMoved(row, col)) {
 
-            if (row != 7 || col != 7) {
-                for(int i=0;i<7;i++)
-                    for(int j=0;j<7;j++)
-                        if(gameState.canBeMoved(i,j))
-                             gameState.getMatrix()[i][j] = Board.DIREC;
+            if (row != 7 || col != 7)
                 steps.set(steps.get() + Integer.parseInt(mark));
-            }
+
             gameState.moveToNext(row, col);
+
+            for(int i=0;i<8;i++)
+                for(int j=0;j<8;j++)
+                    if(gameState.canBeMoved(i,j))
+                        gameState.getMatrix()[i][j] = Board.DIREC;
+
             if (gameState.isSolved()) {
+                for(int i=0;i<8;i++)
+                    for(int j=0;j<8;j++)
+                        gameState.getMatrix()[i][j] = Board.DIREC;
                 gameOver.setValue(true);
                 log.info("Player {} has solved the game in {} steps", playerName, steps.get());
                 messageLabel.setText("Congratulations, " + playerName + "!");
@@ -198,13 +171,7 @@ public class GameController {
                 giveUpButton.setText("Finish");
             }
         }
-//        for(int i=0;i<7;i++)
-//            for(int j=0;j<7;j++)
-//                if(gameState.canBeMoved(i,j))
-//                    PATH[i][j] = 1;
-//        displayGameBoard(gameState,PATH);
         displayGameState();
-
     }
 
     /**

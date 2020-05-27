@@ -40,6 +40,7 @@ public class StoneState implements Cloneable {
             {1, 1, 1, 2, 1, 1, 1, 1},
             {1, 2, 1, 2, 1, 1, 2, 1}
     };
+
     public static final int[][] BOARD = {
             {4, 3, 4, 7, 3, 2, 6, 1},
             {2, 5, 3, 1, 2, 3, 2, 2},
@@ -48,7 +49,7 @@ public class StoneState implements Cloneable {
             {4, 3, 2, 4, 2, 4, 2, 4},
             {3, 3, 2, 2, 5, 2, 5, 2},
             {4, 5, 5, 2, 2, 5, 6, 1},
-            {3, 2, 2, 3, 5, 1, 3, 0}
+            {3, 2, 2, 3, 5, 1, 3, 1}
     };
 
     @Setter(AccessLevel.NONE)
@@ -142,16 +143,12 @@ public class StoneState implements Cloneable {
         int m = 0, x = 0;
         if (CURRENT[stoneRow][stoneCol] == Integer.parseInt(String.valueOf(Board.FRAMED))) {
             {
-
                 if ((BOARD[stoneRow][stoneCol] + stoneRow == row) &&  (BOARD[stoneRow][stoneCol] + stoneCol == col))
                     x = 1;
-
                 else if ((stoneRow + BOARD[stoneRow][stoneCol] == row) && (stoneCol - BOARD[stoneRow][stoneCol] == col))
                     x = 1;
-
                 else if ((stoneRow - BOARD[stoneRow][stoneCol] == row) && (BOARD[stoneRow][stoneCol] + stoneCol == col))
                     x = 1;
-
                 else if (((stoneRow - BOARD[stoneRow][stoneCol]) == row) && ((stoneCol - BOARD[stoneRow][stoneCol]) == col))
                     x = 1;
                 else ;
