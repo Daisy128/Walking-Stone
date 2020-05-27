@@ -153,6 +153,7 @@ public class GameController {
                 steps.set(steps.get() + Integer.parseInt(mark));
 
             gameState.moveToNext(row, col);
+
             for(int i=0;i<8;i++)
                 for(int j=0;j<8;j++)
                     if(gameState.canBeMoved(i,j))
@@ -164,7 +165,6 @@ public class GameController {
                 messageLabel.setText("Congratulations, " + playerName + "!");
                 resetButton.setDisable(true);
                 giveUpButton.setText("Finish");
-
                 for(int i=0;i<8;i++)
                     for(int j=0;j<8;j++)
                         gameState.getMatrix()[i][j] = Board.DIREC;
