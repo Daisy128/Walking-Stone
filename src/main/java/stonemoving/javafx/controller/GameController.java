@@ -76,6 +76,7 @@ public class GameController {
 
     /**
      * Set the player's name when he wants to access in the game.
+     *
      * @param playerName the name setting by the player.
      */
     public void setPlayerName(String playerName) {
@@ -90,7 +91,8 @@ public class GameController {
         stoneImages = List.of(
                 new Image(getClass().getResource("/images/stone.png").toExternalForm()),
                 new Image(getClass().getResource("/images/unframed.png").toExternalForm()),
-                new Image(getClass().getResource("/images/blueframed.png").toExternalForm())
+                new Image(getClass().getResource("/images/blueframed.png").toExternalForm()),
+                new Image(getClass().getResource("/images/unnamed.png").toExternalForm())
         );
         stepsLabel.textProperty().bind(steps.asString());
         gameOver.addListener((observable, oldValue, newValue) -> {
@@ -123,19 +125,31 @@ public class GameController {
 
                 if (gameState.getMatrix()[i][j].getValue() == 0) {
                     view.setImage(stoneImages.get(0));
-                }
-                else if(gameState.getMatrix()[i][j].getValue() == 1) {
+                } else if (gameState.getMatrix()[i][j].getValue() == 1) {
                     view.setImage(stoneImages.get(1));
-                }
-                else{
+                } else {
                     view.setImage(stoneImages.get(2));
                 }
             }
         }
     }
 
+    private void displayGameBoard(int row, int col) {
+        ImageView view;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                view = (ImageView) gameGrid.getChildren().get(i * 8 + j);
+                log.trace("Image({}, {}) = {}", i, j, view.getImage());
+                if (gameState.canBeMoved(row, col))
+                    view.setImage(stoneImages.get(3));
+            }
+        }
+    }
+
+
     /**
      * The stone is moved when the player clicks the next step.
+     *
      * @param mouseEvent is when the player clicks on pane.
      */
     public void handleClickOnStone(MouseEvent mouseEvent) {
@@ -143,8 +157,8 @@ public class GameController {
         int col = GridPane.getRowIndex((Node) mouseEvent.getSource());
         String mark = ((Label) mouseEvent.getSource()).getText();
         log.debug("Path ({}, {}) is chosen", row, col);
-        if (! gameState.isSolved() && gameState.canBeMoved(row, col)) {
-            if(row!=7 || col!=7)
+        if (!gameState.isSolved() && gameState.canBeMoved(row, col)) {
+            if (row != 7 || col != 7)
                 steps.set(steps.get() + Integer.parseInt(mark));
             gameState.moveToNext(row, col);
             if (gameState.isSolved()) {
@@ -156,13 +170,15 @@ public class GameController {
             }
         }
         displayGameState();
+        displayGameBoard(row, col);
     }
 
     /**
      * Reset the game to initial state.
+     *
      * @param actionEvent is the action that the player clicks on that button.
      */
-    public void handleResetButton(ActionEvent actionEvent)  {
+    public void handleResetButton(ActionEvent actionEvent) {
         log.debug("{} is pressed", ((Button) actionEvent.getSource()).getText());
         log.info("Resetting game...");
         stopWatchTimeline.stop();
@@ -171,6 +187,7 @@ public class GameController {
 
     /**
      * Give up the game and go to the final high score list.
+     *
      * @param actionEvent is when the player clicks on "give up".
      * @throws IOException is thrown when the action fails.
      */
