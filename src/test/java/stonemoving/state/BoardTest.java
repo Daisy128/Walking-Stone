@@ -21,5 +21,6 @@ class BoardTest {
         assertEquals("0",Board.STONE.toString());
         assertEquals("1",Board.UNFRAMED.toString());
         assertEquals("2",Board.FRAMED.toString());
+        assertEquals("3",Board.DIREC.toString());
     }
 }

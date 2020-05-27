@@ -149,9 +149,9 @@ public class StoneState implements Cloneable {
             {
                 if ((BOARD[stoneRow][stoneCol] + stoneRow == row) &&  (BOARD[stoneRow][stoneCol] + stoneCol == col))
                     x = 1;
-                else if ((stoneRow + BOARD[stoneRow][stoneCol] == row) && (stoneCol - BOARD[stoneRow][stoneCol] == col))
+                else if ((stoneRow + BOARD[stoneRow][stoneCol] == row) && ((stoneCol - BOARD[stoneRow][stoneCol]) == col))
                     x = 1;
-                else if ((stoneRow - BOARD[stoneRow][stoneCol] == row) && (BOARD[stoneRow][stoneCol] + stoneCol == col))
+                else if (((stoneRow - BOARD[stoneRow][stoneCol]) == row) && (BOARD[stoneRow][stoneCol] + stoneCol == col))
                     x = 1;
                 else if (((stoneRow - BOARD[stoneRow][stoneCol]) == row) && ((stoneCol - BOARD[stoneRow][stoneCol]) == col))
                     x = 1;
