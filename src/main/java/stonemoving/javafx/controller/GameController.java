@@ -149,12 +149,10 @@ public class GameController {
         String mark = ((Label) mouseEvent.getSource()).getText();
         log.debug("Path ({}, {}) is chosen", row, col);
         if (!gameState.isSolved() && gameState.canBeMoved(row, col)) {
-
             if (row != 7 || col != 7)
                 steps.set(steps.get() + Integer.parseInt(mark));
 
             gameState.moveToNext(row, col);
-
             for(int i=0;i<8;i++)
                 for(int j=0;j<8;j++)
                     if(gameState.canBeMoved(i,j))

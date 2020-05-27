@@ -10,13 +10,18 @@ public enum Board {
     STONE,
     /**
      * The value is 1.
-    */
+     */
     UNFRAMED,
 
     /**
      * The value is 2.
-      */
+     */
     FRAMED,
+
+    /**
+     * The value is 3,
+     * indicate the position where the stone can step in.
+     */
 
     DIREC;
 

@@ -41,6 +41,10 @@ public class StoneState implements Cloneable {
             {1, 2, 1, 2, 1, 1, 2, 1}
     };
 
+    /**
+     * It consists of the steps where the stoneman should
+     * take to reach the next position.
+     */
     public static final int[][] BOARD = {
             {4, 3, 4, 7, 3, 2, 6, 1},
             {2, 5, 3, 1, 2, 3, 2, 2},
