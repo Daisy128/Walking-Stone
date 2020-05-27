@@ -1,6 +1,6 @@
-# rolling-cubes-game
+# Walking Stoneman
 
-The rolling cubes puzzle game.
+The stone moving to the target place.
 
 ## Requirements
 

@@ -49,7 +49,6 @@ public class GameController {
     private String playerName;
     private StoneState gameState;
     private IntegerProperty steps = new SimpleIntegerProperty();
-    private IntegerProperty scores = new SimpleIntegerProperty();
     private Instant startTime;
     private List<Image> stoneImages;
 
@@ -61,9 +60,6 @@ public class GameController {
 
     @FXML
     private Label stepsLabel;
-
-    @FXML
-    private Label scoresLabel;
 
     @FXML
     private Label stopWatchLabel;
@@ -96,7 +92,6 @@ public class GameController {
                 new Image(getClass().getResource("/images/unframed.png").toExternalForm()),
                 new Image(getClass().getResource("/images/blueframed.png").toExternalForm())
         );
-        scoresLabel.textProperty().bind(scores.asString());
         stepsLabel.textProperty().bind(steps.asString());
         gameOver.addListener((observable, oldValue, newValue) -> {
             if (newValue) {
@@ -112,7 +107,6 @@ public class GameController {
     private void resetGame() {
         gameState = new StoneState(StoneState.INITIAL);
         steps.set(0);
-        scores.set(0);
         startTime = Instant.now();
         gameOver.setValue(false);
         displayGameState();
@@ -150,9 +144,8 @@ public class GameController {
         String mark = ((Label) mouseEvent.getSource()).getText();
         log.debug("Path ({}, {}) is chosen", row, col);
         if (! gameState.isSolved() && gameState.canBeMoved(row, col)) {
-            steps.set(steps.get() + 1);
             if(row!=7 || col!=7)
-                scores.set(scores.get() + Integer.parseInt(mark));
+                steps.set(steps.get() + Integer.parseInt(mark));
             gameState.moveToNext(row, col);
             if (gameState.isSolved()) {
                 gameOver.setValue(true);
@@ -201,7 +194,7 @@ public class GameController {
                 .player(playerName)
                 .solved(gameState.isSolved())
                 .duration(Duration.between(startTime, Instant.now()))
-                .steps(scores.get()/steps.get())
+                .steps(steps.get())
                 .build();
         return result;
     }
