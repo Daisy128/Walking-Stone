@@ -201,6 +201,9 @@ public class StoneState implements Cloneable {
         }
     }
 
+    /**
+     * Used to renew the board each time the stone man goes into a different step.
+     */
     public void changeDirec(){
         for (int i = 0; i <= 7; i++)
             for (int j = 0; j <= 7; j++) {

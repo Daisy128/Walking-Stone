@@ -12,7 +12,8 @@ class BoardTest {
         assertEquals(Board.STONE, Board.of(0));
         assertEquals(Board.UNFRAMED, Board.of(1));
         assertEquals(Board.FRAMED, Board.of(2));
-        assertThrows(IllegalArgumentException.class, () -> Board.of(3));
+        assertEquals(Board.DIREC, Board.of(3));
+        assertThrows(IllegalArgumentException.class, () -> Board.of(4));
     }
 
     @Test

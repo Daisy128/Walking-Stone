@@ -28,8 +28,8 @@ class StoneStateTest {
         assertFalse(state.canBeMoved(0,2));
         assertFalse(state.canBeMoved(2,0));
         assertFalse(state.canBeMoved(0,0));
-        assertTrue(state.canBeMoved(0,1));
-        assertTrue(state.canBeMoved(1,0));
+        assertTrue(state.canBeMoved(0,4));
+        assertTrue(state.canBeMoved(4,0));
     }
 
     @Test
