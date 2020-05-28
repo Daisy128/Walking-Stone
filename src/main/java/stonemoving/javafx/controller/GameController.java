@@ -90,7 +90,7 @@ public class GameController {
     @FXML
     public void initialize() {
         stoneImages = List.of(
-                new Image(getClass().getResource("/images/stone.png").toExternalForm()),
+                new Image(getClass().getResource("/images/stone0.png").toExternalForm()),
                 new Image(getClass().getResource("/images/unframed.png").toExternalForm()),
                 new Image(getClass().getResource("/images/blueframed.png").toExternalForm()),
                 new Image(getClass().getResource("/images/direction.png").toExternalForm())
