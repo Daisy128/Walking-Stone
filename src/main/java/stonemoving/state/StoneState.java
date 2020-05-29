@@ -83,9 +83,9 @@ public class StoneState implements Cloneable {
     public StoneState(int[][] a) {
         gameInitial(0,0);
 
-        if (!isValidMatrix(0,0)) {
-            throw new IllegalArgumentException();
-        }
+//        if (! (a[0][0] == Board.STONE.getValue())) {
+//            throw new IllegalArgumentException();
+//        }
     }
 
 /*    private boolean isValidMatrix(int[][] a) {
@@ -112,13 +112,11 @@ public class StoneState implements Cloneable {
         return foundText;
     }*/
 
-    private boolean isValidMatrix(int row,int col){
-
-        if(matrix[row][col] == Board.STONE)
-            return true;
-        return false;
-
-    }
+//    private boolean isValidMatrix(){
+//        if(matrix[0][0] == Board.STONE)
+//            return true;
+//        return false;
+//    }
 
     /*private void gameInitial(int[][] a) {
         this.matrix = new Board[8][8];
@@ -134,6 +132,9 @@ public class StoneState implements Cloneable {
 
     private void gameInitial(int row,int col){
         this.matrix = new Board[8][8];
+        for(int i=0;i<8;i++)
+            for(int j=0;j<8;j++)
+        matrix[i][j] = Board.of(INITIAL[i][j]);
         matrix[row][col] = Board.STONE;
         stoneRow = row;
         stoneCol = col;
