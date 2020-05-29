@@ -25,7 +25,8 @@ public class StoneState implements Cloneable {
             {1, 2, 1, 1, 1, 1, 1, 2},
             {1, 1, 1, 2, 1, 1, 1, 1},
             {1, 2, 1, 2, 1, 1, 2, 1}
-    };
+    };*/
+
     /**
      * The 8&#xd7;8 array stores the default state for
      * swapping the variables.
@@ -69,9 +70,9 @@ public class StoneState implements Cloneable {
      * Creates a {@code RollingCubesState} object representing
      * the initial state of the stone-path.
      */
-    public StoneState() {
-        this(INITIAL);
-    }
+//    public StoneState() {
+//        this(INITIAL);
+//    }
 
     /**
      * Initialize state by the specified array.
@@ -81,11 +82,13 @@ public class StoneState implements Cloneable {
      *                                  configuration of the tray.
      */
     public StoneState(int[][] a) {
+
         gameInitial(0,0);
 
-//        if (! (a[0][0] == Board.STONE.getValue())) {
-//            throw new IllegalArgumentException();
-//        }
+        if (! (matrix[0][0] == Board.STONE)) {    //Check if the board is valid.
+            throw new IllegalArgumentException();
+        }
+
     }
 
 /*    private boolean isValidMatrix(int[][] a) {
@@ -135,6 +138,7 @@ public class StoneState implements Cloneable {
         for(int i=0;i<8;i++)
             for(int j=0;j<8;j++)
         matrix[i][j] = Board.of(INITIAL[i][j]);
+
         matrix[row][col] = Board.STONE;
         stoneRow = row;
         stoneCol = col;
@@ -268,7 +272,7 @@ public class StoneState implements Cloneable {
      * @param args arguments
      */
     public static void main(String[] args) {
-        StoneState state = new StoneState();
+        StoneState state = new StoneState(INITIAL);
         System.out.println(state);
         state.moveToNext(1, 7);
         System.out.println(state);
