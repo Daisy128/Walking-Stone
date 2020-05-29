@@ -16,7 +16,7 @@ public class StoneState implements Cloneable {
      * The 8&#xd7;8 array configures the initial state of
      * the stone-path matrix.
      */
-    public static final int[][] INITIAL = {
+   /* public static final int[][] INITIAL = {
             {0, 1, 2, 1, 1, 2, 1, 1},
             {1, 1, 1, 1, 2, 1, 1, 2},
             {1, 1, 1, 2, 1, 1, 1, 1},
@@ -30,7 +30,7 @@ public class StoneState implements Cloneable {
      * The 8&#xd7;8 array stores the default state for
      * swapping the variables.
      */
-    public static final int[][] CURRENT = {
+    public static final int[][] INITIAL = {
             {1, 1, 2, 1, 1, 2, 1, 1},
             {1, 1, 1, 1, 2, 1, 1, 2},
             {1, 1, 1, 2, 1, 1, 1, 1},
@@ -81,13 +81,14 @@ public class StoneState implements Cloneable {
      *                                  configuration of the tray.
      */
     public StoneState(int[][] a) {
-        if (!isValidMatrix(a)) {
+        gameInitial(0,0);
+
+        if (!isValidMatrix(0,0)) {
             throw new IllegalArgumentException();
         }
-        gameInitial(a);
     }
 
-    private boolean isValidMatrix(int[][] a) {
+/*    private boolean isValidMatrix(int[][] a) {
         if (a == null || a.length != 8) {
             return false;
         }
@@ -109,9 +110,17 @@ public class StoneState implements Cloneable {
             }
         }
         return foundText;
+    }*/
+
+    private boolean isValidMatrix(int row,int col){
+
+        if(matrix[row][col] == Board.STONE)
+            return true;
+        return false;
+
     }
 
-    private void gameInitial(int[][] a) {
+    /*private void gameInitial(int[][] a) {
         this.matrix = new Board[8][8];
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
@@ -121,6 +130,11 @@ public class StoneState implements Cloneable {
                 }
             }
         }
+    }*/
+
+    private void gameInitial(int row,int col){
+        this.matrix = new Board[8][8];
+        matrix[row][col] = Board.STONE;
     }
 
     /**
@@ -145,7 +159,7 @@ public class StoneState implements Cloneable {
      */
     public boolean canBeMoved(int row, int col) {
         int m = 0, x = 0;
-        if (CURRENT[stoneRow][stoneCol] == Integer.parseInt(String.valueOf(Board.FRAMED))) {
+        if (INITIAL[stoneRow][stoneCol] == Integer.parseInt(String.valueOf(Board.FRAMED))) {
             {
                 if ((BOARD[stoneRow][stoneCol] + stoneRow == row) &&  (BOARD[stoneRow][stoneCol] + stoneCol == col))
                     x = 1;
@@ -159,7 +173,7 @@ public class StoneState implements Cloneable {
             }
             return x == 1 && 0 <= row && row <= 7 && 0 <= col && col <= 7;
 
-        } else if (CURRENT[stoneRow][stoneCol] == Integer.parseInt(String.valueOf(Board.UNFRAMED))) {
+        } else if (INITIAL[stoneRow][stoneCol] == Integer.parseInt(String.valueOf(Board.UNFRAMED))) {
             if (((BOARD[stoneRow][stoneCol] + stoneRow) == row) && (stoneCol == col)) m = 1;
 
             else if (((stoneRow - BOARD[stoneRow][stoneCol]) == row) && (stoneCol == col)) m = 1;
@@ -192,7 +206,7 @@ public class StoneState implements Cloneable {
                 for (int j = 0; j <= 7; j++) {
                     if (row == i && col == j) ;
                     else if (matrix[row][col] == Board.STONE && matrix[i][j] == Board.STONE) {
-                        matrix[i][j] = Board.of(CURRENT[i][j]);
+                        matrix[i][j] = Board.of(INITIAL[i][j]);
                         break;
                     }
                 }
@@ -204,11 +218,11 @@ public class StoneState implements Cloneable {
     /**
      * Used to renew the board each time the stone man goes into a different step.
      */
-    public void changeDirec(){
+    public void positionCanBeIn(){
         for (int i = 0; i <= 7; i++)
             for (int j = 0; j <= 7; j++) {
                 if(matrix[i][j] == Board.DIREC)
-                    matrix[i][j] = Board.of(CURRENT[i][j]);
+                    matrix[i][j] = Board.of(INITIAL[i][j]);
             }
     }
     /**

@@ -145,7 +145,7 @@ public class GameController {
     public void handleClickOnStone(MouseEvent mouseEvent) {
         int row = GridPane.getColumnIndex((Node) mouseEvent.getSource());
         int col = GridPane.getRowIndex((Node) mouseEvent.getSource());
-        gameState.changeDirec();
+        gameState.positionCanBeIn();
         String mark = ((Label) mouseEvent.getSource()).getText();
         log.debug("Path ({}, {}) is chosen", row, col);
         if (!gameState.isSolved() && gameState.canBeMoved(row, col)) {
