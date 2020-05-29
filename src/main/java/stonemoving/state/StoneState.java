@@ -83,7 +83,7 @@ public class StoneState implements Cloneable {
      */
     public StoneState(int[][] a) {
 
-        gameInitial(0,0);
+        gameInitial(a,0,0);
 
         if (! (matrix[0][0] == Board.STONE)) {    //Check if the board is valid.
             throw new IllegalArgumentException();
@@ -133,11 +133,11 @@ public class StoneState implements Cloneable {
         }
     }*/
 
-    private void gameInitial(int row,int col){
+    private void gameInitial(int[][] a,int row,int col){
         this.matrix = new Board[8][8];
         for(int i=0;i<8;i++)
             for(int j=0;j<8;j++)
-        matrix[i][j] = Board.of(INITIAL[i][j]);
+        matrix[i][j] = Board.of( a[i][j] );
 
         matrix[row][col] = Board.STONE;
         stoneRow = row;
