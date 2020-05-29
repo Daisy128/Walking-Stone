@@ -135,6 +135,8 @@ public class StoneState implements Cloneable {
     private void gameInitial(int row,int col){
         this.matrix = new Board[8][8];
         matrix[row][col] = Board.STONE;
+        stoneRow = row;
+        stoneCol = col;
     }
 
     /**
