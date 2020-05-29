@@ -108,7 +108,7 @@ public class GameController {
     }
 
     private void resetGame() {
-        gameState = new StoneState(StoneState.INITIAL);
+        gameState = new StoneState();
         steps.set(0);
         startTime = Instant.now();
         gameOver.setValue(false);
